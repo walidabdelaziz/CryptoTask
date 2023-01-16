@@ -32,5 +32,40 @@ final class CryptoCoinsTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+    func testFetchData() {
+        // Arrange
+        let mockData = """
+        {
+            "coins": [
+                {
+                "id": 1,
+                "name": "Bitcoin",
+                "symbol": "BTC",
+                "slug": "bitcoin",
+                "quote": {
+                "USD": {
+                "price": 9283.92,
+                "percent_change_1h": -0.152774,
+                }
+        }
+
+            ]
+        }
+        """.data(using: .utf8)
+        let mockURL = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest"
+        let mockHeaders = ["X-CMC_PRO_API_KEY": "f6cf9a86-2073-4cbf-8433-3a0d0a348727"]
+        let networkManager = NetworkManager()
+        let promise = expectation(description: "fetchData")
+        
+        // Act
+        networkManager.fetchData(from: mockURL,start: 1,limit: 10, headers: mockHeaders) { (data, error) in
+            // Assert
+            XCTAssertNil(error)
+            XCTAssertEqual(data, mockData)
+            promise.fulfill()
+        }
+        
+        wait(for: [promise], timeout: 5.0)
+    }
 
 }
