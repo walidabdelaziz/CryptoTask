@@ -13,9 +13,8 @@ class ViewController: UIViewController {
     var refreshControlBooking = UIRefreshControl()
     var currentPage = 1
     var isLoadingList = false
-
     var coinsTV = UITableView()
-//    @IBOutlet weak var coinsTV: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
