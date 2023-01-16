@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     }
     func setupUI(){
         title = "Crypto Currencies"
-        coinsTV = UITableView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
+        coinsTV = UITableView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height - 32))
         coinsTV.delegate = self
         coinsTV.dataSource = self
         coinsTV.separatorStyle = .none
@@ -41,7 +41,7 @@ class ViewController: UIViewController {
     }
     func loadMoreItems(){
         isLoadingList = true
-        currentPage += 1
+        currentPage += 10
         getCryptoCurrencies(page: currentPage)
         
     }

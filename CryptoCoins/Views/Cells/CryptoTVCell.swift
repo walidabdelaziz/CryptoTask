@@ -47,7 +47,7 @@ class CryptoTVCell: UITableViewCell {
         didSet {
             guard let cryptoCurrency = cryptoCurrency else { return }
             self.nameLbl.text = "Name: \(cryptoCurrency.name ?? "")"
-            self.rateLbl.text = "Price: $\(String(format: "%.2f", cryptoCurrency.quote?.usd?.price ?? 0))"
+            self.rateLbl.text = "Price: \(String(format: "%.6f", cryptoCurrency.quote?.usd?.price ?? 0))"
             self.changePerHourLbl.text = "Change per hour: \(String(format: "%.2f", cryptoCurrency.quote?.usd?.percent_change_1h ?? 0))%"
         }
     }
