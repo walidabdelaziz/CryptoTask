@@ -47,9 +47,22 @@ class CryptoTVCell: UITableViewCell {
         didSet {
             guard let cryptoCurrency = cryptoCurrency else { return }
             self.nameLbl.text = "Name: \(cryptoCurrency.name ?? "")"
-            self.rateLbl.text = "Price: \(String(format: "%.6f", cryptoCurrency.quote?.usd?.price ?? 0))"
-            self.changePerHourLbl.text = "Change per hour: \(String(format: "%.2f", cryptoCurrency.quote?.usd?.percent_change_1h ?? 0))%"
+            self.rateLbl.text = "Price: $\(String(format: "%.4f", cryptoCurrency.quote?.usd?.price ?? 0))"
+            self.changePerHourLbl.attributedText = setColor(cryptoCurrency: cryptoCurrency)
         }
+    }
+    func setColor(cryptoCurrency: CryptoCurrency) -> NSAttributedString{
+        let changeStr = "Change per hour: "
+        let percentage = "\((String(format: "%.2f", cryptoCurrency.quote?.usd?.percent_change_1h ?? 0)))%"
+        let attributedString = NSMutableAttributedString(string: changeStr + percentage)
+        attributedString.addAttribute(.foregroundColor, value: UIColor.black, range: NSRange(location: 0, length: changeStr.count))
+        if percentage.contains("-"){
+            attributedString.addAttribute(.foregroundColor, value: UIColor.red, range: NSRange(location: changeStr.count, length: percentage.count))
+        }else{
+            let greenColor = #colorLiteral(red: 0.1607843137, green: 0.3568627451, blue: 0.3294117647, alpha: 1)
+            attributedString.addAttribute(.foregroundColor, value: greenColor, range: NSRange(location: changeStr.count, length: percentage.count))
+        }
+        return attributedString
     }
     override func awakeFromNib() {
         super.awakeFromNib()
